@@ -1,0 +1,17 @@
+.navbar_container {
+  width: 100vw;
+  left: 0%;
+  height: 50px;
+  background-color: #51e2f5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+/* .wrapper {
+  position: absolute;
+  width: 50%;
+  background-color: #9df9ef;
+  height: 80%;
+} */

@@ -1,23 +1,51 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import Navbar from "./components/Navbar/Navbar";
+// import Search from "./components/Search/Search";
+import styles from "../src/App.css";
+
+import fetchAdminData from "./components/Api/Api";
+import { useEffect, useState } from "react";
+import AdminTable from "./components/AdminTable/AdminTable";
+import Search from "./components/Search/Search";
 
 function App() {
+  const [adminData, setAdminData] = useState([]);
+  const [searchInput, setSearchInput] = useState("");
+
+  // SEARCH HANDLER
+  const handleSearchFilter = (e) => {
+    let inputValue = e.target.value;
+    let lowerCase = inputValue.toLowerCase();
+    console.log(lowerCase);
+    setSearchInput(lowerCase);
+  };
+
+  // FETCH DATA
+  const generateAdminData = async () => {
+    try {
+      const data = await fetchAdminData();
+
+      setAdminData(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // USE EFFECT
+  useEffect(() => {
+    generateAdminData();
+  }, []);
+
+  // console.log(adminData);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Navbar />
+      <Search
+        handleSearchFilter={handleSearchFilter}
+        searchInput={searchInput}
+      />
+      <AdminTable data={adminData} searchInput={searchInput} />
     </div>
   );
 }
